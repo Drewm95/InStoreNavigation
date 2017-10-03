@@ -23,11 +23,11 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     //declare the sensor manager
     private SensorManager sensorManager;
-    private Sensor mAccel,mMag;
+    private Sensor mAccel,mMag, mstep;
     private int stepCount, stepSense;
     private Date lastUpdate;
-    private float lastZ, newZ, avgZ, count,zSum, newX, newY, lastx, lasty, mag1Value, mag2Value, mag3Value;
-    private TextView stepDetected,lowAccuracyWarning,x,y,z,avgZText, stepCountView,mag1,mag2, mag3;
+    private float lastZ, newZ, avgZ, count,zSum, newX, newY, lastx, lasty, mag1Value, mag2Value, mag3Value, stepCountReal;
+    private TextView stepDetected,lowAccuracyWarning,x,y,z,avgZText, stepCountView,mag1,mag2, mag3, countChecker;
     private ProgressBar pbar1, pbar2, pbar3;
 
     /*
@@ -55,6 +55,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         pbar1 = (ProgressBar) findViewById(R.id.progressBar4);
         pbar2 = (ProgressBar) findViewById(R.id.progressBar6);
         pbar3 = (ProgressBar) findViewById(R.id.progressBar7);
+        countChecker = (TextView) findViewById(R.id.stepCountTxt);
 
         //get the reset button reference
         final Button button = (Button) findViewById(R.id.button);
@@ -64,6 +65,8 @@ public class MainActivity extends Activity implements SensorEventListener {
                 stepCount = 0;
                 avgZ = 0;
                 stepCountView.setText("0");
+                stepCountReal = 0;
+                countChecker.setText("0");
             }
         });
 
@@ -110,6 +113,18 @@ public class MainActivity extends Activity implements SensorEventListener {
            // mag1.setText("SENSOR NOT PRESENT");
         }
 
+        //get the default step counter from the sm
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
+            //there is a step counter
+            countChecker.setText("STEP SENSOR FOUND");
+            mstep = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
+        } else {
+
+            countChecker.setText("STEP SENSOR NOT PRESENT");
+
+        }
+
         //set all of the required initial last acceleration values
         lastZ = 0; //TODO do this better
         lastx= 0;
@@ -129,6 +144,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         super.onResume();
         sensorManager.registerListener(this, mAccel , SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, mMag, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, mstep, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -194,6 +210,13 @@ public class MainActivity extends Activity implements SensorEventListener {
             pbar2.setProgress((int)mag2Value);
             pbar3.setProgress((int)mag3Value);
         }
+
+        if (event.sensor == mstep) {
+
+            stepCountReal++;
+           countChecker.setText(Float.toString(stepCountReal));
+        }
+
     }
 
     @Override
