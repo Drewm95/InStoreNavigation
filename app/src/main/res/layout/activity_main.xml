@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -152,16 +153,6 @@
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:text="DIAGNOSTIC READINGS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="48dp"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:text="X Axis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -186,5 +177,44 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
+
+    <TextView
+        android:text="DIAGNOSTIC READINGS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressBar4"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressBar6"
+        android:max="130" />
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar7"
+        android:max="130"
+        android:layout_alignTop="@+id/progressBar6"
+        android:layout_toEndOf="@+id/textView" />
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/progressBar4"
+        android:max="130"
+        android:layout_below="@+id/textView15"
+        android:layout_alignStart="@+id/textView2"
+        android:indeterminate="false" />
 
 </RelativeLayout>
