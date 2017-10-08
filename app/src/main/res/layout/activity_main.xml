@@ -221,10 +221,34 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar6"
+        android:layout_below="@+id/progressBar4"
+        android:layout_alignEnd="@+id/progressBar4"
+        android:id="@+id/mag1Text" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mag1Text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
+        android:id="@+id/mag2Text" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar7"
+        android:layout_alignEnd="@+id/progressBar7"
+        android:id="@+id/mag3Text" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
         android:id="@+id/stepCountTxt"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_below="@+id/mag2Text"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

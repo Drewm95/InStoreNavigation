@@ -29,6 +29,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     private float lastZ, newZ, avgZ, count,zSum, newX, newY, lastx, lasty, mag1Value, mag2Value, mag3Value, stepCountReal;
     private TextView stepDetected,lowAccuracyWarning,x,y,z,avgZText, stepCountView,mag1,mag2, mag3, countChecker;
     private ProgressBar pbar1, pbar2, pbar3;
+    public static float[] mAccelerometer = null;
+    public static float[] mGeomagnetic = null;
 
     /*
 
@@ -56,6 +58,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         pbar2 = (ProgressBar) findViewById(R.id.progressBar6);
         pbar3 = (ProgressBar) findViewById(R.id.progressBar7);
         countChecker = (TextView) findViewById(R.id.stepCountTxt);
+        mag1 = (TextView) findViewById(R.id.mag1Text);
+        mag2 = (TextView) findViewById(R.id.mag2Text);
+        mag3 = (TextView) findViewById(R.id.mag3Text);
 
         //get the reset button reference
         final Button button = (Button) findViewById(R.id.button);
@@ -205,7 +210,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             mag3Value = event.values[2];
 
 
-            //set the textview to the new value\
+            //set the textview to the new value
             pbar1.setProgress((int)mag1Value);
             pbar2.setProgress((int)mag2Value);
             pbar3.setProgress((int)mag3Value);
@@ -217,10 +222,42 @@ public class MainActivity extends Activity implements SensorEventListener {
            countChecker.setText(Float.toString(stepCountReal));
         }
 
+        /*
+
+        TEST CODE FOR GETTING DIRECTIONS USING THE MAGNETIC FIELD SENSOR
+
+         */
+
+        double azimuth = 0;
+        double pitch = 0;
+        double roll = 0;
+
+        if (mAccel != null && mMag != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, I, mAccelerometer, mGeomagnetic);
+
+            if (success) {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+                // at this point, orientation contains the azimuth(direction), pitch and roll values.
+                azimuth = 180 * orientation[0] / Math.PI;
+                pitch = 180 * orientation[1] / Math.PI;
+                roll = 180 * orientation[2] / Math.PI;
+            }
+
+            //set the textview with the updated information
+            mag1.setText(Double.toString(azimuth));
+            mag2.setText(Double.toString(pitch));
+            mag3.setText(Double.toString(roll));
+
+        }
+
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
         if (accuracy < 3) {
             lowAccuracyWarning.setVisibility(View.VISIBLE);
     }
