@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     private ProgressBar pbar1, pbar2, pbar3;
     public static float[] mAccelerometer = null;
     public static float[] mGeomagnetic = null;
+    private ImageView  arrow;
 
     /*
 
@@ -63,6 +65,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         mag1 = (TextView) findViewById(R.id.mag1Text);
         mag2 = (TextView) findViewById(R.id.mag2Text);
         mag3 = (TextView) findViewById(R.id.mag3Text);
+        arrow = (ImageView)findViewById(R.id.imageView3);
 
         //get the reset button reference
         final Button button = (Button) findViewById(R.id.button);
@@ -258,6 +261,9 @@ public class MainActivity extends Activity implements SensorEventListener {
             mag1.setText(Double.toString(round(azimuth,2)));
             mag2.setText(Double.toString(round(pitch,2)));
             mag3.setText(Double.toString(round(roll,2)));
+
+            //rotate the arrow
+            arrow.setRotation((float)azimuth);
 
         }
 
