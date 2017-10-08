@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -162,6 +164,9 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor == mAccel) {
 
+            //assign the new event values to the accelerometer array for use with finding direction
+            mAccelerometer = event.values;
+
             //get the latest value from the sensor
 
             newX = event.values[0];
@@ -204,6 +209,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         }
         if (event.sensor == mMag) {
 
+            //assign the new event values to the magnetometer array for use with finding direction
+            mGeomagnetic = event.values;
+
             //get the magnetic field value
             mag1Value = event.values[0];
             mag2Value = event.values[1];
@@ -232,7 +240,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         double pitch = 0;
         double roll = 0;
 
-        if (mAccel != null && mMag != null) {
+        if (mAccelerometer != null && mGeomagnetic != null) {
             float R[] = new float[9];
             float I[] = new float[9];
             boolean success = SensorManager.getRotationMatrix(R, I, mAccelerometer, mGeomagnetic);
@@ -247,9 +255,9 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
 
             //set the textview with the updated information
-            mag1.setText(Double.toString(azimuth));
-            mag2.setText(Double.toString(pitch));
-            mag3.setText(Double.toString(roll));
+            mag1.setText(Double.toString(round(azimuth,2)));
+            mag2.setText(Double.toString(round(pitch,2)));
+            mag3.setText(Double.toString(round(roll,2)));
 
         }
 
@@ -265,6 +273,14 @@ public class MainActivity extends Activity implements SensorEventListener {
             lowAccuracyWarning.setVisibility(View.INVISIBLE);
         }
 }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
 
 

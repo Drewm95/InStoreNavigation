@@ -49,6 +49,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="62dp"
         android:id="@+id/InstructionView"
-        android:textAppearance="@android:style/TextAppearance.Holo.Light.Large" />
+         />
 
 </RelativeLayout>
