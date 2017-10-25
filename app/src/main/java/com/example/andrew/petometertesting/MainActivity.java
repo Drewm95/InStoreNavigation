@@ -2,6 +2,7 @@ package com.example.andrew.petometertesting;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -57,7 +58,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         y = (TextView)findViewById(R.id.yText);
         z = (TextView)findViewById(R.id.zText);
         avgZText = (TextView)findViewById(R.id.zAverage);
-        stepCountView = (TextView)findViewById(R.id.stepCount);
+        stepCountView = (TextView)findViewById(R.id.NavStepCount);
         pbar1 = (ProgressBar) findViewById(R.id.progressBar4);
         pbar2 = (ProgressBar) findViewById(R.id.progressBar6);
         pbar3 = (ProgressBar) findViewById(R.id.progressBar7);
@@ -288,6 +289,12 @@ public class MainActivity extends Activity implements SensorEventListener {
         return bd.doubleValue();
     }
 
+    /** Called when the user taps the Nav button */
+    public void goToNav(View view) {
+        Intent intent = new Intent(this, NavScreen.class);
+        startActivity(intent);
+        
+    }
 
 
 
